@@ -60,14 +60,6 @@ func (a *ArrayQueue) IsEmpty() bool {
 	return a.front == a.rear
 }
 
-func (a *ArrayQueue) GetFront() int {
-	return a.front
-}
-
-func (a *ArrayQueue) GetRear() int {
-	return a.rear
-}
-
 func main() {
 	q := NewArrayQueue(10)
 	for i := 0; i < 11; i++ {
