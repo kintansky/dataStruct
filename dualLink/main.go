@@ -16,10 +16,6 @@ func NewNode(n int, name string) *Node {
 	}
 }
 
-func (n *Node) GetNext() *Node {
-	return n.next
-}
-
 type DualLink struct {
 	head *Node
 }
@@ -94,11 +90,11 @@ func (d *DualLink) Show() {
 	fmt.Println()
 }
 
-func (d *DualLink) ReverseDualLink(node *Node) {
+func (d *DualLink) reverse(node *Node) {
 	if node == nil {
 		return
 	}
-	d.ReverseDualLink(node.next)
+	d.reverse(node.next)
 	tmp := node.pre
 	node.pre = node.next
 	node.next = tmp
@@ -111,26 +107,8 @@ func (d *DualLink) ReverseDualLink(node *Node) {
 	}
 }
 
-// 原地反转一个双向链表
-func (d *DualLink) ReverseDualLink2(node *Node) {
-	if node == nil {
-		return
-	}
-	d.ReverseDualLink(node.next)
-	tmp := node.pre
-	node.pre = node.next
-	node.next = tmp
-	if node.pre == nil { // 如果node是最后一个节点，反转后要修正成head的next为这个node
-		node.pre = d.head
-		d.head.next = node
-	}
-	if node.next == d.head { // 如果node是第一个节点，反转后修正node.next=nil，否则陷入head的死循环
-		node.next = nil
-	}
-}
-
-func (d *DualLink) GetHead() *Node {
-	return d.head
+func (d *DualLink) ReverseDualLink() {
+	d.reverse(d.head.next)
 }
 
 func main() {
@@ -143,6 +121,6 @@ func main() {
 	dl.Show()
 	dl.Del(3)
 	dl.Show()
-	dl.ReverseDualLink(dl.GetHead().GetNext())
+	dl.ReverseDualLink()
 	dl.Show()
 }
