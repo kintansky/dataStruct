@@ -139,8 +139,10 @@ func run(nodeChan <-chan *Node) (ret int64) {
 		}
 		operStack.Push(node)
 	}
+	// 字符串遍历后两个栈的结果
 	numStack.Show()
 	operStack.Show()
+	// 最后出栈所有符号，计算结果
 	for operStack.top != nil {
 		num1 = numStack.Pop().num
 		num2 = numStack.Pop().num
