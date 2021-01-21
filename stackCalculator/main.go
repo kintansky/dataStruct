@@ -5,6 +5,8 @@ import (
 	"strconv"
 )
 
+// 中缀表达式计算器
+
 type Node struct {
 	num       int64
 	oper      string
@@ -154,7 +156,7 @@ func run(nodeChan <-chan *Node) (ret int64) {
 }
 
 func main() {
-	str := "30+2*3-40"
+	str := "30+2*3-40-3*4*2"
 	nodeChan := make(chan *Node, 0)
 	go getNodeFromStr(nodeChan, str)
 	ret := run(nodeChan)
