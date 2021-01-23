@@ -108,7 +108,7 @@ func cal(arrayList []*Node) (res int64) {
 
 func main() {
 	//           -
-	//			/ \
+	//          / \
 	//         *   6
 	//        / \
 	//       +   5
