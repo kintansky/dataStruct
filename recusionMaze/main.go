@@ -34,32 +34,47 @@ func showMaze(maze [][]int) {
 	}
 }
 
-func findPath(x, y int, targetPos [2]int, maze [][]int) {
+func showMazeWithPos(pos [2]int, maze [][]int) {
+	for col, colData := range maze {
+		for row, d := range colData {
+			if col == pos[0] && row == pos[1] {
+				fmt.Printf(" (%d) ", d)
+				continue
+			}
+			fmt.Printf("  %d  ", d)
+		}
+		fmt.Println()
+	}
+}
+
+// 基础解法
+func findPath(x, y int, targetPos [2]int, maze [][]int, step int) {
+	step++
 	// 逆时针寻路，走过的位置置为2，死路置为4
 	if maze[x][y] == 0 {
 		maze[x][y] = 2
 	} else {
 		maze[x][y] = 4
 	}
-	showMaze(maze)
+	showMazeWithPos([2]int{x, y}, maze)
 	if x == targetPos[0] && y == targetPos[1] {
-		fmt.Println("success!")
+		fmt.Printf("success! Take steps:%d\n", step)
 		return
 	}
 	fmt.Println("========================================")
 	switch {
 	case maze[x-1][y] != 1 && maze[x-1][y] != 4: // 向上寻路
-		fmt.Printf("up: (%d, %d)\n", x-1, y)
-		findPath(x-1, y, targetPos, maze)
+		fmt.Printf("move up: now at (%d, %d)\n", x-1, y)
+		findPath(x-1, y, targetPos, maze, step)
 	case maze[x][y-1] != 1 && maze[x][y-1] != 4: // 向左寻路
-		fmt.Printf("left: (%d, %d)\n", x, y-1)
-		findPath(x, y-1, targetPos, maze)
+		fmt.Printf("move left: now at (%d, %d)\n", x, y-1)
+		findPath(x, y-1, targetPos, maze, step)
 	case maze[x+1][y] != 1 && maze[x+1][y] != 4: //向下寻路
-		fmt.Printf("down: (%d, %d)\n", x+1, y)
-		findPath(x+1, y, targetPos, maze)
+		fmt.Printf("move down: now at (%d, %d)\n", x+1, y)
+		findPath(x+1, y, targetPos, maze, step)
 	case maze[x][y+1] != 1 && maze[x][y+1] != 4: //向右寻路
-		fmt.Printf("right: (%d, %d)\n", x, y+1)
-		findPath(x, y+1, targetPos, maze)
+		fmt.Printf("move right: now at (%d, %d)\n", x, y+1)
+		findPath(x, y+1, targetPos, maze, step)
 	default:
 		fmt.Println("unreachable!")
 	}
@@ -70,8 +85,8 @@ func main() {
 	row := 8
 	maze := createMaze(col, row)
 	showMaze(maze)
-	// 起始位置（1，1），目的位置（col-1， row-1）
 	fmt.Println()
-	findPath(1, 1, [2]int{col - 2, row - 2}, maze)
+	// 起始位置（1，1），目的位置（col-1， row-1）
+	findPath(1, 1, [2]int{5, 1}, maze, 0)
 
 }
