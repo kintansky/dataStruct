@@ -47,7 +47,7 @@ func showMazeWithPos(pos [2]int, maze [][]int) {
 	}
 }
 
-// 基础解法
+// 基础解法, 寻路方向影响步数
 func findPath(x, y int, targetPos [2]int, maze [][]int, step int) {
 	step++
 	// 逆时针寻路，走过的位置置为2，死路置为4

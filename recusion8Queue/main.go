@@ -47,9 +47,10 @@ func (q *Queue) Put(queueNum int) {
 	// 递归求解，递归过程其中一层q.DetectConflict为真，都会继续这一层的下一个循环
 	for i := 0; i < q.size; i++ {
 		q.resArray[queueNum] = i
-		if !q.DetectConflict(queueNum) {
-			q.Put(queueNum + 1)
+		if q.DetectConflict(queueNum) {
+			continue
 		}
+		q.Put(queueNum + 1)
 	}
 }
 
