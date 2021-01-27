@@ -7,7 +7,7 @@ import (
 
 type BubbleSort struct {
 	// 两两比较，符合条件的往上升
-
+	// 时间复杂度O(n^2)
 }
 
 func (b *BubbleSort) Sort(arr []int) {
