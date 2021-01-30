@@ -30,7 +30,7 @@ func (s *ShellSort) Sort(arr []int, step int) {
 					break
 				}
 				fmt.Printf("i=%d, step=%d, swap {idx:%d, data:%d}<=>{idx:%d, data:%d}\n", i, step, curIdx, arr[curIdx], curIdx-step, arr[curIdx-step])
-				arr[curIdx], arr[curIdx-step] = arr[curIdx-step], arr[curIdx]
+				arr[curIdx], arr[curIdx-step] = arr[curIdx-step], arr[curIdx] // 交换的位置是往前step位置的值
 				fmt.Println(arr)
 			}
 		}
