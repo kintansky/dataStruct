@@ -3,6 +3,7 @@ package main
 import (
 	"al/sort/common"
 	"fmt"
+	"time"
 )
 
 type BubbleSort struct {
@@ -35,7 +36,7 @@ func (b *BubbleSort) Sort(arr []int) {
 }
 
 func main() {
-	arr := common.GenRandInt(100, 1000)
+	arr := common.GenRandInt(100, 1000, time.Now().UnixNano())
 	fmt.Println("org:", arr)
 	b := BubbleSort{}
 	b.Sort(arr)
