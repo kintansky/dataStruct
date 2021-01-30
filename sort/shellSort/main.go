@@ -23,10 +23,7 @@ func (s *ShellSort) Sort(arr []int, step int) {
 	}
 	for i := 0; i < step; i++ {
 		// 每隔step取出一个值，进行插入排序
-		for j := 1; ; j++ {
-			if i+step*j >= len(arr) {
-				break
-			}
+		for j := 1; i+step*j < len(arr); j++ {
 			// 取出的值与前面step间隔的值，进行比较进行插入排序，注意运行条件curIdx > i
 			for curIdx := i + step*j; curIdx > i; curIdx = curIdx - step {
 				if arr[curIdx] >= arr[curIdx-step] {
