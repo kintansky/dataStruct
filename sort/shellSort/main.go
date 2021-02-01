@@ -65,15 +65,15 @@ func (s *ShellSort) Sort2(arr []int) {
 
 func main() {
 	seed := time.Now().UnixNano()
-	arr := common.GenRandInt(10, 1000000, seed)
-	fmt.Println(time.Now())
+	arr := common.GenRandInt(100000, 1000000, seed)
+	t1 := time.Now()
 	ss := ShellSort{}
 	ss.Sort(arr, 2)
-	fmt.Println(time.Now())
+	fmt.Println(time.Now().Sub(t1))
 
-	arr = common.GenRandInt(10, 1000000, seed)
-	fmt.Println(time.Now())
-	// ss.Sort(arr, 10)
-	ss.Sort2(arr)
-	fmt.Println(time.Now())
+	// arr = common.GenRandInt(10, 1000000, seed)
+	// fmt.Println(time.Now())
+	// // ss.Sort(arr, 10)
+	// ss.Sort2(arr)
+	// fmt.Println(time.Now())
 }
