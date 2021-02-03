@@ -3,6 +3,7 @@ package main
 import (
 	"al/sort/common"
 	"fmt"
+	"time"
 )
 
 type MergeSort struct {
@@ -15,9 +16,9 @@ func (m *MergeSort) Sort(arr []int, headIdx, tailIdx int) (newArr []int) {
 	midIdx := (headIdx + tailIdx) / 2
 	arr1 := m.Sort(arr, headIdx, midIdx)
 	arr2 := m.Sort(arr, midIdx, tailIdx)
-	fmt.Printf("arr1:%v, arr2:%v\n", arr1, arr2)
+	// fmt.Printf("arr1:%v, arr2:%v\n", arr1, arr2)
 	newArr = m.Merge(arr1, arr2)
-	fmt.Printf("merge res:%v\n", newArr)
+	// fmt.Printf("merge res:%v\n", newArr)
 	return
 }
 
@@ -52,11 +53,11 @@ func (m *MergeSort) Merge(arr1 []int, arr2 []int) (newArr []int) {
 }
 
 func main() {
-	arr := common.GenRandInt(10, 100, 1)
-	fmt.Println(arr)
+	arr := common.GenRandInt(500000, 1000000, 1)
+	// fmt.Println(arr)
+	t1 := time.Now()
 	ms := MergeSort{}
-	newArr := ms.Sort(arr, 0, len(arr))
-	fmt.Println(newArr)
-	// testArr := ms.Merge([]int{2, 4, 5}, []int{1, 3, 7, 9})
-	// fmt.Println(testArr)
+	_ = ms.Sort(arr, 0, len(arr))
+	// fmt.Println(newArr)
+	fmt.Println(time.Now().Sub(t1))
 }
