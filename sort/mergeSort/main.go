@@ -6,6 +6,9 @@ import (
 )
 
 type MergeSort struct {
+	// 递归+分治
+	// 1 不断递归划分，直到只剩一个无法划分为止，剩一个元素
+	// 2 无法划分后，范围从小到大不断地合并排序
 }
 
 func (m *MergeSort) Split(arr []int, headIdx, tailIdx int) (newArr []int) {
@@ -99,9 +102,12 @@ func main() {
 	fmt.Println(arr)
 	// t1 := time.Now()
 	ms := MergeSort{}
+	// 下面这种方法会导致merge一次申请一次内存空间
 	// newArr := ms.Split(arr, 0, len(arr))
 	// fmt.Println(newArr)
 	// fmt.Println(time.Now().Sub(t1))
+
+	// 下面这种只需要申请一次临时内存空间即可
 	tmpArr := make([]int, len(arr)) // 临时数组的最长长度就是原数组长度，但每次使用是的有效长度都不一样
 	ms.Split2(arr, 0, len(arr), tmpArr)
 	fmt.Println(arr)
