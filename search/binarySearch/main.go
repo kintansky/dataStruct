@@ -22,6 +22,7 @@ func (b *BinarySearch) Search(target int, arr []int, left, right int) (idx int) 
 	return
 }
 
+// 查找所有目标值的index
 func (b *BinarySearch) SearchAllIndex(target int, arr []int, left, right int, idxArr *[]int) {
 	if left > right {
 		return
