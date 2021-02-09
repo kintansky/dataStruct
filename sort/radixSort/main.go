@@ -6,8 +6,13 @@ import (
 )
 
 type RadixSort struct {
-	bucket           [10][]int
-	bucketDataCntArr [10]int
+	// 依次遍历数组，按照个进位有低至高（个十百千万...）进行分类
+	// 1 先依次按照个位，把所有数据依次放入[0-9]的桶
+	// 1.1 遍历[0-9]桶，取回数据放回arr
+	// 2 按照十位，重复以上步骤，如果<10的，归为0
+	// 3 最后完成的结束条件：绝对值最大的数的最高位也完成了分类
+	bucket           [10][]int // bucket,存放数据的桶
+	bucketDataCntArr [10]int   // 每个桶有效数据长度
 }
 
 func NewRadixSort(size int) *RadixSort {
