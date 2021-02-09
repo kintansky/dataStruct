@@ -1,6 +1,7 @@
 package main
 
 import (
+	"al/sort/common"
 	"fmt"
 	"time"
 )
@@ -61,7 +62,7 @@ func (r *RadixSort) Sort(arr []int) {
 					arrIdx++
 				}
 			}
-			fmt.Println("radix:", arr)
+			// fmt.Println("radix:", arr)
 			break
 		}
 		// 不是最后一次取出的时候，正常按顺序回填即可
@@ -69,14 +70,14 @@ func (r *RadixSort) Sort(arr []int) {
 			if cnt == 0 {
 				continue
 			}
-			fmt.Println(i, r.bucket[i])
+			// fmt.Println(i, r.bucket[i])
 			for j := 0; j < cnt; j++ {
 				arr[arrIdx] = r.bucket[i][j]
 				arrIdx++
 			}
 			r.bucketDataCntArr[i] = 0
 		}
-		fmt.Println("radix:", arr)
+		// fmt.Println("radix:", arr)
 	}
 }
 
@@ -87,8 +88,9 @@ func main() {
 	// }
 	// arr2 := common.GenRandInt(4, 100, 2)
 	// arr := append(arr1, arr2...)
-	arr := []int{1, -1, 2, -7, -8, 0}
-	fmt.Println(arr)
+	// arr := []int{1, -1, 2, -7, -8, 0}
+	arr := common.GenRandInt(100000, 1000000, time.Now().UnixNano())
+	// fmt.Println(arr)
 	rs := NewRadixSort(len(arr))
 	t := time.Now()
 	rs.Sort(arr)
