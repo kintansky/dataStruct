@@ -28,10 +28,10 @@ func (b *BinarySearch) SearchAllIndex(target int, arr []int, left, right int, id
 		return
 	}
 	mid := (left + right) / 2
-	fmt.Println(left, mid, right, arr[mid])
+	// fmt.Println(left, mid, right, arr[mid])
 	if target == arr[mid] {
 		*idxArr = append(*idxArr, mid)
-		fmt.Println(idxArr)
+		// fmt.Println(idxArr)
 	}
 	b.SearchAllIndex(target, arr, mid+1, right, idxArr)
 	b.SearchAllIndex(target, arr, left, mid-1, idxArr)
@@ -52,8 +52,11 @@ func main() {
 	arr = append(arr, 8)
 	arr[7] = 8
 	fmt.Println(arr)
-	var idxArr []int
-	bs.SearchAllIndex(8, arr, 0, len(arr)-1, &idxArr)
-	fmt.Println(idxArr)
+	var idxArr1 []int
+	bs.SearchAllIndex(8, arr, 0, len(arr)-1, &idxArr1)
+	fmt.Println(idxArr1)
+	var idxArr2 []int
+	bs.SearchAllIndex(90, arr, 0, len(arr)-1, &idxArr2)
+	fmt.Println(idxArr2)
 
 }
