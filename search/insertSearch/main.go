@@ -7,13 +7,13 @@ type InsertSearch struct {
 
 func (i *InsertSearch) Search(target int, arr []int, left, right int) (idx int) {
 	idx = -1
-	if left > right {
+	if left > right || target < arr[0] || target > arr[len(arr)-1] { // 越界的也可以直接在这里退出
 		return
 	}
 	mid := left + (target-arr[left])*(right-left)/(arr[right]-arr[left]) // 注意公式
-	if mid > right || mid < left {                                       // 插值查找有可能会越界，这里需要判断退出
-		return
-	}
+	// if mid > right || mid < left {                                       // 插值查找有可能会越界，这里需要判断退出
+	// 	return
+	// }
 	if arr[mid] == target {
 		return mid
 	}

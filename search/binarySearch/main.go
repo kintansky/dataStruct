@@ -7,7 +7,7 @@ type BinarySearch struct {
 
 func (b *BinarySearch) Search(target int, arr []int, left, right int) (idx int) {
 	idx = -1
-	if left > right {
+	if left > right || target < arr[0] || target > arr[len(arr)-1] {
 		return
 	}
 	mid := (left + right) / 2
@@ -24,7 +24,7 @@ func (b *BinarySearch) Search(target int, arr []int, left, right int) (idx int) 
 
 // 查找所有目标值的index
 func (b *BinarySearch) SearchAllIndex(target int, arr []int, left, right int, idxArr *[]int) {
-	if left > right {
+	if left > right || target < arr[0] || target > arr[len(arr)-1] {
 		return
 	}
 	mid := (left + right) / 2
