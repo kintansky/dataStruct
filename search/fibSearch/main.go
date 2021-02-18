@@ -14,7 +14,7 @@ func (f *FibSearch) Search(target int, arr []int) (idx int) {
 	)
 	// 1 生成一个斐波那契数列
 	fibArr := fib(len(arr))
-	fmt.Println("fib:", fibArr)
+	// fmt.Println("fib:", fibArr)
 	// 2 找到满足数值大于数组长度的斐波那契数列下标
 	for fibArr[k]-1 < len(arr) {
 		k++
@@ -25,14 +25,14 @@ func (f *FibSearch) Search(target int, arr []int) (idx int) {
 		appendArr[idx] = arr[high]
 	}
 	newArr := append(arr, appendArr...)
-	fmt.Println("newArr:", newArr)
+	// fmt.Println("newArr:", newArr)
 	// 4 不断进行划分，F(k) = F(k-1)+F(k-2)，分成前半为F(k-1)个，后半是F(k-2)个
 	for low <= high {
 		mid = low + fibArr[k-1] - 1
-		if target < newArr[mid] {
+		if target < newArr[mid] { // 前半F(k-1)
 			high = mid - 1
 			k -= 1
-		} else if target > newArr[mid] {
+		} else if target > newArr[mid] { // 后半F(k-2)
 			low = mid + 1
 			k -= 2
 		} else {
