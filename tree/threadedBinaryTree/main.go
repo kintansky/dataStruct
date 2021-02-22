@@ -18,20 +18,20 @@ func (n *Node) Show() {
 	fmt.Printf("num:%d,", n.num)
 }
 
-// PrefixWalk 前序遍历
+// PrefixWalk 线索化后的前序遍历
 func (n *Node) PrefixWalk() {
 	n.Show()
-	if n.left != nil {
+	if !(n.left == nil || n.leftType == 1) {
 		n.left.PrefixWalk()
 	}
-	if n.right != nil {
+	if !(n.right == nil || n.rightType == 1) {
 		n.right.PrefixWalk()
 	}
 }
 
-// 中序遍历
+// 线索化后的中序遍历
 func (n *Node) MiddleWalk() {
-	if !(n.left == nil || n.rightType == 1) {
+	if !(n.left == nil || n.leftType == 1) { // 注意条件
 		n.left.MiddleWalk()
 	}
 	n.Show()
@@ -42,10 +42,10 @@ func (n *Node) MiddleWalk() {
 
 // 后序遍历
 func (n *Node) SuffixWalk() {
-	if n.left != nil {
+	if !(n.left == nil || n.leftType == 1) {
 		n.left.SuffixWalk()
 	}
-	if n.right != nil {
+	if !(n.right == nil || n.rightType == 1) {
 		n.right.SuffixWalk()
 	}
 	n.Show()
@@ -175,12 +175,14 @@ func main() {
 	node4 := NewNode(8)
 	node5 := NewNode(10)
 	node6 := NewNode(14)
+	node7 := NewNode(15)
 	t.root = root
 	root.left = node2
 	root.right = node3
 	node2.left = node4
 	node2.right = node5
 	node3.left = node6
+	node4.right = node7
 
 	fmt.Println(node5.left, node5.right)
 	t.MiddleThreadedNodes()
