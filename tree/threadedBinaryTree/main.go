@@ -3,9 +3,11 @@ package main
 import "fmt"
 
 type Node struct {
-	num   int
-	left  *Node
-	right *Node
+	num       int
+	left      *Node
+	right     *Node
+	leftType  int // 0代表指向左子树，1指向前驱节点
+	rightType int // 0代表指向右子树，1指向后继节点
 }
 
 func NewNode(num int) *Node {
@@ -29,11 +31,11 @@ func (n *Node) PrefixWalk() {
 
 // 中序遍历
 func (n *Node) MiddleWalk() {
-	if n.left != nil {
+	if !(n.left == nil || n.rightType == 1) {
 		n.left.MiddleWalk()
 	}
 	n.Show()
-	if n.right != nil {
+	if !(n.right == nil || n.rightType == 1) {
 		n.right.MiddleWalk()
 	}
 }
@@ -51,6 +53,7 @@ func (n *Node) SuffixWalk() {
 
 type Tree struct {
 	root *Node
+	pre  *Node // 辅助指针，总是指向当前节点的前驱节点
 }
 
 func NewTree() *Tree {
@@ -136,28 +139,52 @@ func (t *Tree) SuffixWalk() {
 
 }
 
+// 中序线索化二叉树
+func (t *Tree) middleThreadedNodes(node *Node) {
+	if node == nil {
+		return
+	}
+	// 1 线索化左指数
+	t.middleThreadedNodes(node.left)
+	// 2 线索化当前节点的前驱指针和他的前驱点的后继指针
+	// 2.1 前驱节点和类型：更新当前节点的左空指针指向前驱节点
+	if node.left == nil {
+		node.left = t.pre
+		node.leftType = 1
+	}
+	// 2.2 后继节点和类型：更新当前节点的前驱节点的右空指针指向后继节点
+	if t.pre != nil && t.pre.right == nil {
+		t.pre.right = node
+		t.pre.rightType = 1
+	}
+	t.pre = node
+	// 3 线索化右指数
+	t.middleThreadedNodes(node.right)
+
+}
+
+func (t *Tree) MiddleThreadedNodes() {
+	t.middleThreadedNodes(t.root)
+}
+
 func main() {
 	t := NewTree()
-	for i := 5; i < 8; i++ {
-		t.Add(NewNode(i))
-	}
-	for i := 1; i < 5; i++ {
-		t.Add(NewNode(i))
-	}
-	// node1 := NewNode(1)
-	// node2 := NewNode(2)
-	// node3 := NewNode(3)
-	// node4 := NewNode(4)
-	// node1.left = node2
-	// node1.right = node3
-	// node3.right = node4
-	// t.root = node1
-	t.PrefixWalk()
-	t.MiddleWalk()
-	t.SuffixWalk()
+	root := NewNode(1)
+	node2 := NewNode(3)
+	node3 := NewNode(6)
+	node4 := NewNode(8)
+	node5 := NewNode(10)
+	node6 := NewNode(14)
+	t.root = root
+	root.left = node2
+	root.right = node3
+	node2.left = node4
+	node2.right = node5
+	node3.left = node6
 
-	fmt.Println(t.Search(7))
-	fmt.Println(t.Search(2))
-	fmt.Println(t.Search(5))
-	fmt.Println(t.Search(20))
+	fmt.Println(node5.left, node5.right)
+	t.MiddleThreadedNodes()
+	fmt.Println(node5.left, node5.right)
+
+	t.MiddleWalk()
 }
