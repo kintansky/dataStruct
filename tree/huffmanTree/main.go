@@ -18,13 +18,13 @@ func NewNode(num int) *Node {
 	return &Node{num: num}
 }
 
-func (n *Node) prefixWalk(node *Node) {
-	fmt.Println(node.num)
-	if node.left != nil {
-		n.prefixWalk(node.left)
+func (n *Node) prefixWalk() {
+	fmt.Println(n.num)
+	if n.left != nil {
+		n.left.prefixWalk()
 	}
-	if node.right != nil {
-		n.prefixWalk(node.right)
+	if n.right != nil {
+		n.right.prefixWalk()
 	}
 }
 
@@ -53,7 +53,7 @@ func (h *HuffManTree) GenHuffManTree(arr []int) *Node {
 
 	for len(list) > 1 {
 		// 1 从小到大排序
-		sort.Sort(ByNum(list))
+		sort.Sort(ByNum(list)) // 需要类型转换
 		// 2 最小的两个元素构建一颗二叉树
 		tmpRoot := NewNode(list[0].num + list[1].num)
 		tmpRoot.left = list[0]
@@ -67,7 +67,7 @@ func (h *HuffManTree) GenHuffManTree(arr []int) *Node {
 }
 
 func (h *HuffManTree) PreFixWalk(root *Node) {
-	root.prefixWalk(root)
+	root.prefixWalk()
 }
 
 func main() {
