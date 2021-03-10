@@ -141,6 +141,7 @@ func (h *huffman) archive(s string) (huffmanByte []byte) {
 	return
 }
 
+// HuffmanArchive huffman编码
 func (h *huffman) HuffmanArchive(s string) (huffmanByte []byte, length int) {
 	h.createTree(s)
 	h.genEncodeMap(h.root, "", "")
@@ -149,18 +150,19 @@ func (h *huffman) HuffmanArchive(s string) (huffmanByte []byte, length int) {
 	return
 }
 
+// HuffmanUnArchive huffman解码
 func (h *huffman) HuffmanUnArchive(huffmanByte []byte, encodeMap map[byte]string, orgLength int) (res string) {
 	// 1 转二进制，拼接成str
 	var huffmanStr string
 	for i, b := range huffmanByte {
-		if i == len(huffmanByte)-1 { // 最后一位是否补0，补多少个0，由原来的huffmanStr决定
+		if i == len(huffmanByte)-1 { // 最后一位是否补0，补多少个0，由原来的huffmanStr长度决定
 			realCnt := fmt.Sprintf("%%%db", orgLength-i*8)
 			huffmanStr += fmt.Sprintf(realCnt, b)
 			continue
 		}
 		huffmanStr += fmt.Sprintf("%08b", b) // 其余字符都要补0
 	}
-	fmt.Println(huffmanStr, len(huffmanStr))
+	// fmt.Println(huffmanStr, len(huffmanStr))
 	// 2 根据字典翻译出结果
 	// 2.1 反转encodeMap 的 k，v
 	decodeMap := make(map[string]byte)
