@@ -65,7 +65,7 @@ func (b *BST) walk(n *Node) {
 	}
 }
 
-// 非递归查找，n 查找的节点，pn 查找节点的父节点，nodeType n是pn的left还是right节点，如果是root节点，nodeType=root
+// 非递归查找节点和他的父节点，n 查找的节点，pn 查找节点的父节点，nodeType n是pn的left还是right节点，如果是root节点，nodeType=root
 func (b *BST) FindNode(i int) (n *Node, pn *Node, nodeType string) {
 	tmp := b.root
 	if tmp.data == i {
