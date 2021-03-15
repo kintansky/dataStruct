@@ -65,7 +65,7 @@ func (b *BST) walk(n *Node) {
 	}
 }
 
-// 非递归查找
+// 非递归查找，n 查找的节点，pn 查找节点的父节点，nodeType n是pn的left还是right节点，如果是root节点，nodeType=root
 func (b *BST) FindNode(i int) (n *Node, pn *Node, nodeType string) {
 	tmp := b.root
 	if tmp.data == i {
@@ -141,8 +141,10 @@ func (b *BST) FindNode2(i int) (n *Node, pn *Node, nodeType string) {
 func (b *BST) DelNode(i int) {
 	// 0 找到对应节点的父节点
 	node, parentNode, nodeType := b.FindNode(i)
-	fmt.Println(node, parentNode, nodeType)
-
+	// fmt.Println(node, parentNode, nodeType)
+	if node == nil {
+		return
+	}
 	// 1 如果删除的是叶子节点，把父节点对应的子节点删掉就可
 	if node.left == nil && node.right == nil {
 		switch nodeType {
@@ -183,27 +185,26 @@ func (b *BST) DelNode(i int) {
 			// 3.1.1 将右子树中最小的叶子删除
 			if leftestNode == nil {
 				node.data = leftestParentNode.data
-				node.right = nil
+				node.right = leftestParentNode.right
 				return
 			}
 			leftestParentNode.left = nil
-			// 3.1.2 将右子树中最小的叶子复制替换进去要删除的节点node
-			parentNode.left.data = leftestNode.data
+			// 3.1.2 将右子树中最小的叶子替换进去要删除的节点node
+			node.data = leftestNode.data
 		case "right":
-			// 3.2 找到要删除节点的右子树中最大（最右）的叶子
+			// 3.2 找到要删除节点的左子树中最大（最右）的叶子
 			rightestNode, rightestParentNode := b.RightestNode(node.left)
-			fmt.Println(rightestNode, rightestParentNode)
 			if rightestNode == nil {
 				node.data = rightestParentNode.data
-				node.left = nil
+				node.left = rightestParentNode.left
 				return
 			}
-			rightestParentNode.left = nil
-			parentNode.right.data = rightestNode.data
-		case "root":
+			rightestParentNode.right = nil
+			node.data = rightestNode.data
+		case "root": // 根节点按照left或者right任一处理方式都可以
 			rightestNode, rightestParentNode := b.RightestNode(node.left)
-			rightestParentNode.left = nil
-			b.root.right.data = rightestNode.data
+			rightestParentNode.right = nil
+			b.root.data = rightestNode.data
 		}
 		return
 	}
@@ -232,7 +233,7 @@ func (b *BST) RightestNode(node *Node) (n *Node, pn *Node) {
 }
 
 func main() {
-	arr := []int{7, 3, 10, 12, 5, 1, 9, 14, 13, 11, 8}
+	arr := []int{10, 5, 1, 8, 7, 6, 9, 12, 11, 13}
 	bst := BST{}
 	for _, d := range arr {
 		bst.InsertNode(NewNode(d))
