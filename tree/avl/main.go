@@ -109,6 +109,7 @@ func (a *AvlTree) Rotate() {
 			a.root.RotateLeft()
 		}
 		fmt.Printf("root:%d, height:%d, leftTreeHeight:%d, rightTreeHeight:%d\n", a.root.data, a.root.Height(), a.root.left.Height(), a.root.right.Height())
+		return
 	}
 	if a.root.right.Height()-a.root.left.Height() < -1 {
 		if a.root.left != nil && a.root.left.right.Height() > a.root.right.Height() {
@@ -118,6 +119,7 @@ func (a *AvlTree) Rotate() {
 			a.root.RotateRight()
 		}
 		fmt.Printf("root:%d, height:%d, leftTreeHeight:%d, rightTreeHeight:%d\n", a.root.data, a.root.Height(), a.root.left.Height(), a.root.right.Height())
+		return
 	}
 }
 
