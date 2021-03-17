@@ -20,17 +20,10 @@ func NewNode(i int) *Node {
 
 // Height 返回当前节点为根节点的子树的高度
 func (n *Node) Height() (h int) {
-	var leftHeight, rightHeight int
-	if n.left == nil && n.right == nil {
-		return int(math.Max(float64(leftHeight), float64(rightHeight))) + 1
+	if n == nil {
+		return
 	}
-	if n.left == nil && n.right != nil {
-		return int(math.Max(float64(leftHeight), float64(n.right.Height()))) + 1
-	}
-	if n.left != nil && n.right == nil {
-		return int(math.Max(float64(n.left.Height()), float64(rightHeight))) + 1
-	}
-	return
+	return int(math.Max(float64(n.left.Height()), float64(n.right.Height()))) + 1
 }
 
 type AvlTree struct {
