@@ -7,6 +7,7 @@ import (
 
 // avl平衡二叉树是一个bst树，但是通过算法把bst树优化成左右子树高度差绝对值<=1
 // 以达到左右子树平衡，优化查找速度
+// 算法：红黑树、AVL算法、替罪羊树、Treap、伸展树
 
 type Node struct {
 	data  int
