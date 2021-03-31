@@ -76,14 +76,15 @@ func (g *Graph) Show() {
 	}
 }
 
-// 遍历，DFS深度优先
-func (g *Graph) DFS() {
+// 遍历，DFS深度优先，从任意一个顶点开始遍历
+func (g *Graph) DFS(startVertexIdx int) {
 	visited := make([]bool, g.vertexNum)
-	for i := 0; i < g.vertexNum; i++ {
-		if visited[i] {
+	for i := startVertexIdx; i < startVertexIdx+g.vertexNum; i++ { // 外层循环避免非联通图的情况
+		idx := i % g.vertexNum
+		if visited[idx] {
 			continue
 		}
-		g.dfs(i, visited)
+		g.dfs(idx, visited)
 	}
 }
 
@@ -91,6 +92,7 @@ func (g *Graph) dfs(i int, visited []bool) {
 	visited[i] = true
 	fmt.Println(g.GetVertex(i))
 	for j := 0; j < g.vertexNum; j++ {
+		// 如果顶点的出现未遍历的邻接节点，则递归遍历这个邻接节点
 		if !visited[j] && g.edges[i][j] != 0 {
 			g.dfs(j, visited)
 		}
@@ -111,5 +113,5 @@ func main() {
 	g.AddEdge(g.GetVertexIdx("d"), g.GetVertexIdx("a"), 1)
 	g.Show()
 
-	g.DFS()
+	g.DFS(2)
 }
