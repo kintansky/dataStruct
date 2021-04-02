@@ -112,6 +112,7 @@ func (q *Queue) IsFull() bool {
 
 func (g *Graph) BFS(startVertexIdx int) {
 	visited := make([]bool, g.vertexNum)
+	// 非连通图情况下的遍历
 	for i := startVertexIdx; i < startVertexIdx+g.vertexNum; i++ {
 		idx := i % g.vertexNum
 		if visited[idx] {
@@ -123,12 +124,15 @@ func (g *Graph) BFS(startVertexIdx int) {
 
 func (g *Graph) bfs(startVertexIdx int, visited []bool) {
 	queue := NewQueue(g.vertexNum)
+
 	fmt.Println(g.GetVertex(startVertexIdx))
 	visited[startVertexIdx] = true
-	queue.Push(startVertexIdx)
+	queue.Push(startVertexIdx) // 访问完后本顶点入队，出队的时候用于访问他的所有邻接点
 	for !queue.IsEmpty() {
 		idx := queue.Pop()
+		// BFS优先遍历完当前顶点的所有邻接点
 		for i := 0; i < g.vertexNum; i++ {
+			// 如果顶点有未访问的邻接点，进行访问并入队
 			if g.edges[idx][i] != 0 && !visited[i] {
 				fmt.Println(g.GetVertex(i))
 				visited[i] = true
@@ -152,6 +156,5 @@ func main() {
 	// g.AddEdge(g.GetVertexIdx("a"), g.GetVertexIdx("d"), 1)
 	g.AddEdge(g.GetVertexIdx("d"), g.GetVertexIdx("e"), 1)
 	g.Show()
-	// g.bfs(0)
 	g.BFS(4)
 }
