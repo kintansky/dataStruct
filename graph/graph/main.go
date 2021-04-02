@@ -182,8 +182,8 @@ func main() {
 	g.AddEdge(g.GetVertexIdx("4"), g.GetVertexIdx("8"), 1)
 	g.AddEdge(g.GetVertexIdx("5"), g.GetVertexIdx("8"), 1)
 	g.Show()
-	fmt.Println("++++++++++++++++")
+	fmt.Println("++++++++DFS++++++++")
 	g.DFS(0)
-	fmt.Println("++++++++++++++++")
+	fmt.Println("++++++++BFS++++++++")
 	g.BFS(0)
 }
