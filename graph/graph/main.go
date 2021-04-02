@@ -76,10 +76,46 @@ func (g *Graph) Show() {
 	}
 }
 
+type Queue struct {
+	maxSize int
+	front   int
+	rear    int
+	arr     []int
+}
+
+func NewQueue(s int) *Queue {
+	return &Queue{
+		maxSize: s,
+		front:   -1, // 队头
+		rear:    -1, // 队尾
+		arr:     make([]int, s),
+	}
+}
+
+func (q *Queue) Push(i int) {
+	q.rear++
+	q.arr[q.rear] = i
+}
+
+func (q *Queue) Pop() (i int) {
+	q.front++
+	i = q.arr[q.front]
+	return
+}
+
+func (q *Queue) IsEmpty() bool {
+	return q.rear == q.front
+}
+
+func (q *Queue) IsFull() bool {
+	return q.rear == q.maxSize-1
+}
+
 // 遍历，DFS深度优先，从任意一个顶点开始遍历
 func (g *Graph) DFS(startVertexIdx int) {
 	visited := make([]bool, g.vertexNum)
-	for i := startVertexIdx; i < startVertexIdx+g.vertexNum; i++ { // 外层循环避免非联通图的情况
+	// 外层循环避免非联通图的情况
+	for i := startVertexIdx; i < startVertexIdx+g.vertexNum; i++ {
 		idx := i % g.vertexNum
 		if visited[idx] {
 			continue
@@ -99,6 +135,39 @@ func (g *Graph) dfs(i int, visited []bool) {
 	}
 }
 
+// 遍历，BFS广度优先，从任意一个顶点开始遍历
+func (g *Graph) BFS(startVertexIdx int) {
+	visited := make([]bool, g.vertexNum)
+	// 非连通图情况下的遍历
+	for i := startVertexIdx; i < startVertexIdx+g.vertexNum; i++ {
+		idx := i % g.vertexNum
+		if visited[idx] {
+			continue
+		}
+		g.bfs(idx, visited)
+	}
+}
+
+func (g *Graph) bfs(startVertexIdx int, visited []bool) {
+	queue := NewQueue(g.vertexNum)
+
+	fmt.Println(g.GetVertex(startVertexIdx))
+	visited[startVertexIdx] = true
+	queue.Push(startVertexIdx) // 访问完后本顶点入队，出队的时候用于访问他的所有邻接点
+	for !queue.IsEmpty() {
+		idx := queue.Pop()
+		// BFS优先遍历完当前顶点的所有邻接点
+		for i := 0; i < g.vertexNum; i++ {
+			// 如果顶点有未访问的邻接点，进行访问并入队
+			if g.edges[idx][i] != 0 && !visited[i] {
+				fmt.Println(g.GetVertex(i))
+				visited[i] = true
+				queue.Push(i)
+			}
+		}
+	}
+}
+
 func main() {
 	g := NewGraph(5)
 	g.Insert("a")
@@ -114,4 +183,6 @@ func main() {
 	g.Show()
 
 	g.DFS(2)
+	fmt.Println("++++++++++++++++")
+	g.BFS(4)
 }
