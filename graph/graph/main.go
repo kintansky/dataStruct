@@ -169,20 +169,21 @@ func (g *Graph) bfs(startVertexIdx int, visited []bool) {
 }
 
 func main() {
-	g := NewGraph(5)
-	g.Insert("a")
-	g.Insert("b")
-	g.Insert("c")
-	g.Insert("d")
-	g.Insert("e")
-	// g.AddEdge(g.GetVertexIdx("a"), g.GetVertexIdx("c"), 1)
-	// g.AddEdge(g.GetVertexIdx("b"), g.GetVertexIdx("c"), 1)
-	g.AddEdge(g.GetVertexIdx("b"), g.GetVertexIdx("d"), 1)
-	g.AddEdge(g.GetVertexIdx("d"), g.GetVertexIdx("e"), 1)
-	g.AddEdge(g.GetVertexIdx("d"), g.GetVertexIdx("a"), 1)
+	g := NewGraph(8)
+	for i := 0; i < 8; i++ {
+		g.Insert(fmt.Sprintf("%d", i+1))
+	}
+	g.AddEdge(g.GetVertexIdx("1"), g.GetVertexIdx("2"), 1)
+	g.AddEdge(g.GetVertexIdx("1"), g.GetVertexIdx("3"), 1)
+	g.AddEdge(g.GetVertexIdx("2"), g.GetVertexIdx("4"), 1)
+	g.AddEdge(g.GetVertexIdx("2"), g.GetVertexIdx("5"), 1)
+	g.AddEdge(g.GetVertexIdx("3"), g.GetVertexIdx("6"), 1)
+	g.AddEdge(g.GetVertexIdx("3"), g.GetVertexIdx("7"), 1)
+	g.AddEdge(g.GetVertexIdx("4"), g.GetVertexIdx("8"), 1)
+	g.AddEdge(g.GetVertexIdx("5"), g.GetVertexIdx("8"), 1)
 	g.Show()
-
-	g.DFS(2)
 	fmt.Println("++++++++++++++++")
-	g.BFS(4)
+	g.DFS(0)
+	fmt.Println("++++++++++++++++")
+	g.BFS(0)
 }
