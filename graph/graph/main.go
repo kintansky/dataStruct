@@ -75,12 +75,83 @@ func (g *Graph) Show() {
 	}
 }
 
+type Queue struct {
+	maxSize int
+	front   int
+	rear    int
+	arr     []int
+}
+
+func NewQueue(s int) *Queue {
+	return &Queue{
+		maxSize: s,
+		front:   -1, // 队头
+		rear:    -1, // 队尾
+		arr:     make([]int, s),
+	}
+}
+
+func (q *Queue) Push(i int) {
+	q.rear++
+	q.arr[q.rear] = i
+}
+
+func (q *Queue) Pop() (i int) {
+	q.front++
+	i = q.arr[q.front]
+	return
+}
+
+func (q *Queue) IsEmpty() bool {
+	return q.rear == q.front
+}
+
+func (q *Queue) IsFull() bool {
+	return q.rear == q.maxSize-1
+}
+
+func (g *Graph) BFS(startVertexIdx int) {
+	visited := make([]bool, g.vertexNum)
+	for i := startVertexIdx; i < startVertexIdx+g.vertexNum; i++ {
+		idx := i % g.vertexNum
+		if visited[idx] {
+			continue
+		}
+		g.bfs(idx, visited)
+	}
+}
+
+func (g *Graph) bfs(startVertexIdx int, visited []bool) {
+	queue := NewQueue(g.vertexNum)
+	fmt.Println(g.GetVertex(startVertexIdx))
+	visited[startVertexIdx] = true
+	queue.Push(startVertexIdx)
+	for !queue.IsEmpty() {
+		idx := queue.Pop()
+		for i := 0; i < g.vertexNum; i++ {
+			if g.edges[idx][i] != 0 && !visited[i] {
+				fmt.Println(g.GetVertex(i))
+				visited[i] = true
+				queue.Push(i)
+			}
+		}
+	}
+}
+
 func main() {
 	g := NewGraph(5)
 	g.Insert("a")
 	g.Insert("b")
 	g.Insert("c")
+	g.Insert("d")
+	g.Insert("e")
 	g.AddEdge(g.GetVertexIdx("a"), g.GetVertexIdx("c"), 1)
-	g.AddEdge(g.GetVertexIdx("b"), g.GetVertexIdx("c"), 1)
+	// g.AddEdge(g.GetVertexIdx("b"), g.GetVertexIdx("c"), 1)
+	// g.AddEdge(g.GetVertexIdx("a"), g.GetVertexIdx("e"), 1)
+	// g.AddEdge(g.GetVertexIdx("b"), g.GetVertexIdx("d"), 1)
+	// g.AddEdge(g.GetVertexIdx("a"), g.GetVertexIdx("d"), 1)
+	g.AddEdge(g.GetVertexIdx("d"), g.GetVertexIdx("e"), 1)
 	g.Show()
+	// g.bfs(0)
+	g.BFS(4)
 }
