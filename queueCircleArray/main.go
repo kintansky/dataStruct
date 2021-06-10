@@ -19,6 +19,8 @@ func NewCircleArrayQueue(ms int) *CircleArrayQueue {
 }
 
 func (c *CircleArrayQueue) IsFull() bool {
+	// c.rear指向最后一个元素的后一个位置，而且这个位置是一个预留空位置，不能插入
+	// 所以如果满，则意味着这个空位的下一位就是队头
 	return (c.rear+1)%c.maxSize == c.front
 }
 
